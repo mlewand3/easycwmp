@@ -19,7 +19,7 @@ entry_execute_method_root_Time() {
 		common_execute_method_param "$DMROOT.Time.NTPServer2" "0" "echo TODO" "" "xsd:string" "1"
 		common_execute_method_param "$DMROOT.Time.CurrentLocalTime" "0" "echo TODO" "" "xsd:dateTime" "1"
 		common_execute_method_param "$DMROOT.Time.LocalTimeZone" "0" "echo TODO" "" "xsd:string" "1"
-		common_execute_method_param "$DMROOT.Time.LocalTimeZoneName" "0" "echo TODO" "" "xsd:string" "1"
+		common_execute_method_param "$DMROOT.Time.LocalTimeZoneName" "0" "get_timezone_name" "" "xsd:string" "1"
 		common_execute_method_param "$DMROOT.Time.DaylightSavingsUsed" "0" "echo TODO" "" "xsd:boolean" "1"
 		common_execute_method_param "$DMROOT.Time.DaylightSavingsStart" "0" "echo TODO" "" "xsd:dateTime" "1"
 		common_execute_method_param "$DMROOT.Time.DaylightSavingsEnd" "0" "echo TODO" "" "xsd:dateTime" "1"
@@ -28,3 +28,15 @@ entry_execute_method_root_Time() {
 	esac
 	return $E_INVALID_PARAMETER_NAME;
 }
+
+#######################################
+#   Data model parameters functions   #
+#######################################
+
+get_timezone_name() {
+	local tz=`timedatectl | grep 'Time zone'`
+	tz=${tz#*'Time zone: '}
+	echo $tz
+}
+
+#       Time zone: Europe/Warsaw (CEST, +0200)
