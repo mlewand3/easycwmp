@@ -1,13 +1,11 @@
 #!/bin/sh
-# Copyright (C) 2015 PIVA Software <www.pivasoftware.com>
-# 	Author: MOHAMED Kallel <mohamed.kallel@pivasoftware.com>
 
 #common_execute_method_param "$parameter" "$permission" "$get_cmd" "$set_cmd" "xsd:$type" "$forcedinform"
 #  $forcedinform should be set to 1 if the parameter is included in the inform message otherwise empty
 #  Default of $type = string
 
 #############################
-#   Entry point functuons   #
+#   Entry point functions   #
 #############################
 
 prefix_list="$prefix_list $DMROOT.Time."
@@ -15,7 +13,7 @@ entry_execute_method_list="$entry_execute_method_list entry_execute_method_root_
 entry_execute_method_list_forcedinform="$entry_execute_method_list_forcedinform  entry_execute_method_root_Time"
 
 entry_execute_method_root_Time() {
-	case "$1" in ""|"$DMROOT."|"$DMROOT.DeviceInfo."*)
+	case "$1" in ""|"$DMROOT."|"$DMROOT.Time."*)
 		common_execute_method_obj "$DMROOT.Time." "0"
 		common_execute_method_param "$DMROOT.Time.NTPServer1" "0" "echo TODO" "" "xsd:string" "1"
 		common_execute_method_param "$DMROOT.Time.NTPServer2" "0" "echo TODO" "" "xsd:string" "1"

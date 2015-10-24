@@ -1,0 +1,34 @@
+#!/bin/sh
+# Copyright (C) 2015 PIVA Software <www.pivasoftware.com>
+# 	Author: MOHAMED Kallel <mohamed.kallel@pivasoftware.com>
+
+#common_execute_method_param "$parameter" "$permission" "$get_cmd" "$set_cmd" "xsd:$type" "$forcedinform"
+#  $forcedinform should be set to 1 if the parameter is included in the inform message otherwise empty
+#  Default of $type = string
+
+#############################
+#   Entry point functions   #
+#############################
+
+prefix_list="$prefix_list $DMROOT.IPPingDiagnostics."
+entry_execute_method_list="$entry_execute_method_list entry_execute_method_root_IPPingDiagnostics"
+
+entry_execute_method_root_IPPingDiagnostics() {
+	case "$1" in ""|"$DMROOT."|"$DMROOT.IPPingDiagnostics.."*)
+		common_execute_method_obj "$DMROOT.IPPingDiagnostics." "0"
+		common_execute_method_param "$DMROOT.IPPingDiagnostics.DiagnosticsState" "0" "echo TODO" "" "xsd:string"
+		common_execute_method_param "$DMROOT.IPPingDiagnostics.Interface" "0" "echo TODO" "" "xsd:string"
+		common_execute_method_param "$DMROOT.IPPingDiagnostics.Host" "0" "echo TODO" "" "xsd:string"
+		common_execute_method_param "$DMROOT.IPPingDiagnostics.NumberOfRepetitions" "0" "echo TODO" "" "xsd:unsignedInt"
+		common_execute_method_param "$DMROOT.IPPingDiagnostics.Timeout" "0" "echo TODO" "" "xsd:unsignedInt"
+		common_execute_method_param "$DMROOT.IPPingDiagnostics.DataBlockSize" "0" "echo TODO" "" "xsd:unsignedInt"
+		common_execute_method_param "$DMROOT.IPPingDiagnostics.DSCP" "0" "echo TODO" "" "xsd:unsignedInt"
+		common_execute_method_param "$DMROOT.IPPingDiagnostics.SuccessCount" "0" "echo TODO" "" "xsd:unsignedInt"
+		common_execute_method_param "$DMROOT.IPPingDiagnostics.FailureCount" "0" "echo TODO" "" "xsd:unsignedInt"
+		common_execute_method_param "$DMROOT.IPPingDiagnostics.AverageResponseTime" "0" "echo TODO" "" "xsd:unsignedInt"
+		common_execute_method_param "$DMROOT.IPPingDiagnostics.MinimumResponseTime" "0" "echo TODO" "" "xsd:unsignedInt"
+		common_execute_method_param "$DMROOT.IPPingDiagnostics.MaximumResponseTime" "0" "echo TODO" "" "xsd:unsignedInt"
+		;;
+	esac
+	return $E_INVALID_PARAMETER_NAME;
+}

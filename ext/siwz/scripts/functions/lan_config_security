@@ -1,0 +1,23 @@
+#!/bin/sh
+# Copyright (C) 2015 PIVA Software <www.pivasoftware.com>
+# 	Author: MOHAMED Kallel <mohamed.kallel@pivasoftware.com>
+
+#common_execute_method_param "$parameter" "$permission" "$get_cmd" "$set_cmd" "xsd:$type" "$forcedinform"
+#  $forcedinform should be set to 1 if the parameter is included in the inform message otherwise empty
+#  Default of $type = string
+
+#############################
+#   Entry point functions   #
+#############################
+
+prefix_list="$prefix_list $DMROOT.LANConfigSecurity."
+entry_execute_method_list="$entry_execute_method_list entry_execute_method_root_LANConfigSecurity"
+
+entry_execute_method_root_LANConfigSecurity() {
+	case "$1" in ""|"$DMROOT."|"$DMROOT.LANConfigSecurity.."*)
+		common_execute_method_obj "$DMROOT.LANConfigSecurity." "0"
+		common_execute_method_param "$DMROOT.LANConfigSecurity.ConfigPassword" "0" "echo TODO"
+		;;
+	esac
+	return $E_INVALID_PARAMETER_NAME;
+}

@@ -1,0 +1,25 @@
+#!/bin/sh
+# Copyright (C) 2015 PIVA Software <www.pivasoftware.com>
+# 	Author: MOHAMED Kallel <mohamed.kallel@pivasoftware.com>
+
+#common_execute_method_param "$parameter" "$permission" "$get_cmd" "$set_cmd" "xsd:$type" "$forcedinform"
+#  $forcedinform should be set to 1 if the parameter is included in the inform message otherwise empty
+#  Default of $type = string
+
+#############################
+#   Entry point functions   #
+#############################
+
+prefix_list="$prefix_list $DMROOT.GatewayInfo."
+entry_execute_method_list="$entry_execute_method_list entry_execute_method_root_GatewayInfo"
+
+entry_execute_method_root_GatewayInfo() {
+	case "$1" in ""|"$DMROOT."|"$DMROOT.GatewayInfo.."*)
+		common_execute_method_obj "$DMROOT.GatewayInfo." "0"
+		common_execute_method_param "$DMROOT.GatewayInfo.ManufacturerOUI" "0" "echo TODO"
+		common_execute_method_param "$DMROOT.GatewayInfo.ProductClass" "0" "echo TODO"
+		common_execute_method_param "$DMROOT.GatewayInfo.SerialNumber" "0" "echo TODO"
+		;;
+	esac
+	return $E_INVALID_PARAMETER_NAME;
+}

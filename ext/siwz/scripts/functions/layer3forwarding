@@ -1,0 +1,36 @@
+#!/bin/sh
+# Copyright (C) 2015 PIVA Software <www.pivasoftware.com>
+# 	Author: MOHAMED Kallel <mohamed.kallel@pivasoftware.com>
+
+#common_execute_method_param "$parameter" "$permission" "$get_cmd" "$set_cmd" "xsd:$type" "$forcedinform"
+#  $forcedinform should be set to 1 if the parameter is included in the inform message otherwise empty
+#  Default of $type = string
+
+#############################
+#   Entry point functions   #
+#############################
+
+prefix_list="$prefix_list $DMROOT.Layer3Forwarding."
+entry_execute_method_list="$entry_execute_method_list entry_execute_method_root_Layer3Forwarding"
+
+entry_execute_method_root_Layer3Forwarding() {
+	case "$1" in ""|"$DMROOT."|"$DMROOT.Layer3Forwarding.."*)
+		common_execute_method_obj "$DMROOT.Layer3Forwarding." "0"
+		common_execute_method_param "$DMROOT.Layer3Forwarding.DefaultConnectionService" "0" "echo TODO"
+		common_execute_method_param "$DMROOT.Layer3Forwarding.ForwardNumberOfEntries" "0" "echo TODO"
+		common_execute_method_obj "$DMROOT.Layer3Forwarding.Forwarding." "0" "echo TODO"
+		common_execute_method_obj "$DMROOT.Layer3Forwarding.Forwarding.1." "0" "echo TODO"
+		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.1.Enable" "0" "echo TODO" "" "xsd:boolean"
+		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.1.Status" "0" "echo TODO"
+		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.1.DestIPAddress" "0" "echo TODO"
+		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.1.DestSubnetMask" "0" "echo TODO"
+		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.1.SourceIPAddress" "0" "echo TODO"
+		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.1.SourceSubnetMask" "0" "echo TODO"
+		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.1.GatewayIPAddress" "0" "echo TODO"
+		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.1.Interface" "0" "echo TODO"
+		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.1.ForwardingMetric" "0" "echo TODO" "" "xsd:int"
+		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.1.MTU" "0" "echo TODO" "" "xsd:unsignedInt"
+		;;
+	esac
+	return $E_INVALID_PARAMETER_NAME;
+}

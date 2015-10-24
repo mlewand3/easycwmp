@@ -1,0 +1,21 @@
+#!/bin/sh
+
+#common_execute_method_param "$parameter" "$permission" "$get_cmd" "$set_cmd" "xsd:$type" "$forcedinform"
+#  $forcedinform should be set to 1 if the parameter is included in the inform message otherwise empty
+#  Default of $type = string
+
+#############################
+#   Entry point functions   #
+#############################
+
+prefix_list="$prefix_list $DMROOT.LTE."
+entry_execute_method_list="$entry_execute_method_list entry_execute_method_root_LTE"
+
+entry_execute_method_root_LTE() {
+	case "$1" in ""|"$DMROOT."|"$DMROOT.LTE.."*)
+		common_execute_method_obj "$DMROOT.LTE." "0"
+		common_execute_method_param "$DMROOT.LTE.TODO" "0" "echo TODO"
+		;;
+	esac
+	return $E_INVALID_PARAMETER_NAME;
+}

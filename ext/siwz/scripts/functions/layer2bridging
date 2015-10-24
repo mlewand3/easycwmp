@@ -1,0 +1,50 @@
+#!/bin/sh
+# Copyright (C) 2015 PIVA Software <www.pivasoftware.com>
+# 	Author: MOHAMED Kallel <mohamed.kallel@pivasoftware.com>
+
+#common_execute_method_param "$parameter" "$permission" "$get_cmd" "$set_cmd" "xsd:$type" "$forcedinform"
+#  $forcedinform should be set to 1 if the parameter is included in the inform message otherwise empty
+#  Default of $type = string
+
+#############################
+#   Entry point functions   #
+#############################
+
+prefix_list="$prefix_list $DMROOT.Layer2Bridging."
+entry_execute_method_list="$entry_execute_method_list entry_execute_method_root_Layer2Bridging"
+
+entry_execute_method_root_Layer2Bridging() {
+	case "$1" in ""|"$DMROOT."|"$DMROOT.Layer2Bridging."*)
+		common_execute_method_obj "$DMROOT.Layer2Bridging." "0"
+		common_execute_method_param "$DMROOT.Layer2Bridging.MaxBridgeEntries" "0" "echo TODO" "" "xsd:unsignedInt"
+		common_execute_method_param "$DMROOT.Layer2Bridging.MaxFilterEntries" "0" "echo TODO" "" "xsd:unsignedInt"
+		common_execute_method_param "$DMROOT.Layer2Bridging.MaxMarkingEntries" "0" "echo TODO" "" "xsd:unsignedInt"
+		common_execute_method_param "$DMROOT.Layer2Bridging.BridgeNumberOfEntries" "0" "echo TODO" "" "xsd:unsignedInt"
+		common_execute_method_param "$DMROOT.Layer2Bridging.FilterNumberOfEntries" "0" "echo TODO" "" "xsd:unsignedInt"
+		common_execute_method_param "$DMROOT.Layer2Bridging.MarkingNumberOfEntries" "0" "echo TODO" "" "xsd:unsignedInt"
+		common_execute_method_param "$DMROOT.Layer2Bridging.AvailableInterfaceNumberOfEntries" "0" "echo TODO" "" "xsd:unsignedInt"
+		common_execute_method_obj "$DMROOT.Layer2Bridging.Bridge." "0"
+		common_execute_method_obj "$DMROOT.Layer2Bridging.Bridge.1." "0"
+		common_execute_method_param "$DMROOT.Layer2Bridging.Bridge.1.BridgeKey" "0" "echo TODO" "" "xsd:unsignedInt"
+		common_execute_method_param "$DMROOT.Layer2Bridging.Bridge.1.BridgeEnable" "0" "echo TODO" "" "xsd:boolean"
+		common_execute_method_param "$DMROOT.Layer2Bridging.Bridge.1.BridgeStatus" "0" "echo TODO" "" "xsd:string"
+		common_execute_method_param "$DMROOT.Layer2Bridging.Bridge.1.BridgeName" "0" "echo TODO" "" "xsd:string"
+		common_execute_method_param "$DMROOT.Layer2Bridging.Bridge.1.VLANID" "0" "echo TODO" "" "xsd:unsignedInt"
+		common_execute_method_obj "$DMROOT.Layer2Bridging.Filter." "0"
+		common_execute_method_obj "$DMROOT.Layer2Bridging.Filter.1." "0"
+		common_execute_method_param "$DMROOT.Layer2Bridging.Filter.1.FilterKey" "0" "echo TODO" "" "xsd:unsignedInt"
+		common_execute_method_param "$DMROOT.Layer2Bridging.Filter.1.FilterEnable" "0" "echo TODO" "" "xsd:boolean"
+		common_execute_method_param "$DMROOT.Layer2Bridging.Filter.1.FilterStatus" "0" "echo TODO" "" "xsd:string"
+		common_execute_method_param "$DMROOT.Layer2Bridging.Filter.1.FilterBridgeReference" "0" "echo TODO" "" "xsd:int"
+		common_execute_method_param "$DMROOT.Layer2Bridging.Filter.1.FilterInterface" "0" "echo TODO" "" "xsd:string"
+		common_execute_method_param "$DMROOT.Layer2Bridging.Filter.1.SourceMACFromVendorClassIDFilter" "0" "echo TODO" "" "xsd:string"
+		common_execute_method_param "$DMROOT.Layer2Bridging.Filter.1.SourceMACFromVendorClassIDFilterExclude" "0" "echo TODO" "" "xsd:boolean"
+		common_execute_method_obj "$DMROOT.Layer2Bridging.AvailableInterface." "0"
+		common_execute_method_obj "$DMROOT.Layer2Bridging.AvailableInterface.1." "0"
+		common_execute_method_param "$DMROOT.Layer2Bridging.AvailableInterface.1.AvailableInterfaceKey" "0" "echo TODO" "" "xsd:unsignedInt"
+		common_execute_method_param "$DMROOT.Layer2Bridging.AvailableInterface.1.InterfaceType" "0" "echo TODO" "" "xsd:string"
+		common_execute_method_param "$DMROOT.Layer2Bridging.AvailableInterface.1.InterfaceReference" "0" "echo TODO" "" "xsd:string"
+		;;
+	esac
+	return $E_INVALID_PARAMETER_NAME;
+}

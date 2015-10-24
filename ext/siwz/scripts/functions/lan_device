@@ -1,0 +1,133 @@
+#!/bin/sh
+# Copyright (C) 2015 PIVA Software <www.pivasoftware.com>
+# 	Author: MOHAMED Kallel <mohamed.kallel@pivasoftware.com>
+
+#common_execute_method_param "$parameter" "$permission" "$get_cmd" "$set_cmd" "xsd:$type" "$forcedinform"
+#  $forcedinform should be set to 1 if the parameter is included in the inform message otherwise empty
+#  Default of $type = string
+
+#############################
+#   Entry point functions   #
+#############################
+
+prefix_list="$prefix_list $DMROOT.LANDevice."
+entry_execute_method_list="$entry_execute_method_list entry_execute_method_root_LANDevice"
+entry_execute_method_list_forcedinform="$entry_execute_method_list_forcedinform entry_execute_method_root_LANDevice"
+
+entry_execute_method_root_LANDevice() {
+	case "$1" in ""|"$DMROOT."|"$DMROOT.LANDevice."*)
+		common_execute_method_obj "$DMROOT.LANDevice." "0"
+		common_execute_method_obj "$DMROOT.LANDevice.1." "0"
+		common_execute_method_obj "$DMROOT.LANDevice.1.LANHostConfigManagement." "0"
+		common_execute_method_obj "$DMROOT.LANDevice.1.LANHostConfigManagement.DHCPOption." "0"
+		common_execute_method_obj "$DMROOT.LANDevice.1.LANHostConfigManagement.DHCPConditionalServingPool." "0"
+		common_execute_method_obj "$DMROOT.LANDevice.1.LANHostConfigManagement." "0"
+		common_execute_method_obj "$DMROOT.LANDevice.1.LANHostConfigManagement.IPInterface." "0"
+		common_execute_method_obj "$DMROOT.LANDevice.1.LANHostConfigManagement.IPInterface.1." "0"
+		common_execute_method_param "$DMROOT.LANDevice.1.LANHostConfigManagement.IPInterface.1.Enable" "0" "echo TODO" "" "xsd:boolean"
+		common_execute_method_param "$DMROOT.LANDevice.1.LANHostConfigManagement.IPInterface.1.IPInterfaceIPAddress" "0" "echo TODO" "" "xsd:string"
+		common_execute_method_param "$DMROOT.LANDevice.1.LANHostConfigManagement.IPInterface.1.IPInterfaceSubnetMask" "0" "echo TODO" "" "xsd:string"
+		common_execute_method_param "$DMROOT.LANDevice.1.LANHostConfigManagement.IPInterface.1.IPInterfaceAddressingType" "0" "echo TODO" "" "xsd:string"
+		common_execute_method_obj "$DMROOT.LANDevice.1.LANEthernetInterfaceConfig." "0"
+		common_execute_method_obj "$DMROOT.LANDevice.1.LANEthernetInterfaceConfig.1." "0"
+		common_execute_method_param "$DMROOT.LANDevice.1.LANEthernetInterfaceConfig.1.Enable" "0" "echo TODO" "" "xsd:boolean"
+		common_execute_method_param "$DMROOT.LANDevice.1.LANEthernetInterfaceConfig.1.Status" "0" "echo TODO" "" "xsd:string"
+		common_execute_method_param "$DMROOT.LANDevice.1.LANEthernetInterfaceConfig.1.MACAddress" "0" "echo TODO" "" "xsd:string"
+		common_execute_method_param "$DMROOT.LANDevice.1.LANEthernetInterfaceConfig.1.MACAddressControlEnabled" "0" "echo TODO" "" "xsd:boolean"
+		common_execute_method_param "$DMROOT.LANDevice.1.LANEthernetInterfaceConfig.1.MaxBitRate" "0" "echo TODO" "" "xsd:string"
+		common_execute_method_param "$DMROOT.LANDevice.1.LANEthernetInterfaceConfig.1.DuplexMode" "0" "echo TODO" "" "xsd:string"
+		common_execute_method_obj "$DMROOT.LANDevice.1.LANEthernetInterfaceConfig.1.Stats." "0"
+		common_execute_method_param "$DMROOT.LANDevice.1.LANEthernetInterfaceConfig.1.Stats.BytesSent" "0" "echo TODO" "" "xsd:unsignedInt"
+		common_execute_method_param "$DMROOT.LANDevice.1.LANEthernetInterfaceConfig.1.Stats.BytesReceived" "0" "echo TODO" "" "xsd:unsignedInt"
+		common_execute_method_param "$DMROOT.LANDevice.1.LANEthernetInterfaceConfig.1.Stats.PacketsSent" "0" "echo TODO" "" "xsd:unsignedInt"
+		common_execute_method_param "$DMROOT.LANDevice.1.LANEthernetInterfaceConfig.1.Stats.PacketsReceived" "0" "echo TODO" "" "xsd:unsignedInt"
+		common_execute_method_obj "$DMROOT.LANDevice.1.Hosts." "0"
+		common_execute_method_param "$DMROOT.LANDevice.1.Hosts.HostNumberOfEntries" "0" "echo TODO" "" "xsd:unsignedInt"
+		common_execute_method_obj "$DMROOT.LANDevice.1.Hosts.Host." "0"
+		common_execute_method_param "$DMROOT.LANDevice.1.Hosts.Host.IPAdess" "0" "echo TODO" "" "xsd:string"
+		common_execute_method_param "$DMROOT.LANDevice.1.Hosts.Host.AddressSource" "0" "echo TODO" "" "xsd:string"
+		common_execute_method_param "$DMROOT.LANDevice.1.Hosts.Host.LeaseTimeRemaining" "0" "echo TODO" "" "xsd:int"
+		common_execute_method_param "$DMROOT.LANDevice.1.Hosts.Host.MACAddress" "0" "echo TODO" "" "xsd:string"
+		common_execute_method_param "$DMROOT.LANDevice.1.Hosts.Host.HostName" "0" "echo TODO" "" "xsd:string"
+		common_execute_method_param "$DMROOT.LANDevice.1.Hosts.Host.InterfaceType" "0" "echo TODO" "" "xsd:string"
+		common_execute_method_param "$DMROOT.LANDevice.1.Hosts.Host.Active" "0" "echo TODO" "" "xsd:boolean"
+		common_execute_method_obj "$DMROOT.LANDevice.1.WLANConfiguration." "1" "lan_device_add_wlan_iface"
+		local iface ifaces=`$UCI_SHOW wireless | grep "wireless\.@wifi-iface\[[0-9]\+\]=wifi-iface" | awk -F'[.=]' '{print $2}'` 
+		for iface in $ifaces; do
+			local j=`lan_device_update_instance $iface`
+			sub_entry_landevice_wlanconfig "$1" "$j" "$iface"
+		done
+		return 0
+		;;
+	esac
+	return $E_INVALID_PARAMETER_NAME;
+}
+
+sub_entry_landevice_wlanconfig() {
+	local j="$2"
+	local iface="$3"
+	case_param "$1" belongto "$DMROOT.LANDevice.1.WLANConfiguration.$j." && {
+		common_execute_method_obj "$DMROOT.LANDevice.1.WLANConfiguration.$j." "1" "" "lan_device_delete_wlan_iface $iface"
+		common_execute_method_param "$DMROOT.LANDevice.1.WLANConfiguration.$j.Enable" "1" "lan_device_get_wlan_enable" "lan_device_set_wlan_enable" "xsd:boolean"
+		common_execute_method_param "$DMROOT.LANDevice.1.WLANConfiguration.$j.SSID" "1" "$UCI_GET wireless.$iface.ssid" "lan_device_set_wlan_cfg wireless.$iface.ssid"
+	}
+}
+
+#######################################
+#   Data model parameters functions   #
+#######################################
+
+lan_device_get_wlan_enable() {
+	local val=`$UCI_GET wireless.wl0.disabled 2> /dev/null`
+	[ "$val" = "1" ] && echo "0" || echo "1"
+}
+
+lan_device_set_wlan_enable() {
+	local val="$1"
+	common_set_bool "wireless.wl0.disabled" "$val" "0" "1"
+	local e="$?"
+	[ "$e" != "0" ] && return $e
+	return 0
+}
+
+lan_device_set_wlan_cfg() {
+	local cfg="$1"
+	local val="$2"
+	$UCI_SET $cfg="$val"
+	return 0
+}
+
+lan_device_get_wlan_max_instance() {
+	local max=`$UCI_SHOW wireless | grep "wireless\.@wifi-iface\[[0-9]\+\].instance=" | cut -d'=' -f2 | sed 's/[^0-9]*//g' | sort -nru | head -1`
+	echo ${max:-0}
+}
+
+lan_device_update_instance() {
+	local iface="$1"
+	local instance=`$UCI_GET wireless.$iface.instance`
+	if [ -z "$instance" ]; then
+		instance=`lan_device_get_wlan_max_instance`
+		$UCI_SET wireless.$iface.instance=$((++instance))
+		$UCI_COMMIT
+	fi
+	echo $instance
+}
+
+lan_device_add_wlan_iface() {
+	local instance=`lan_device_get_wlan_max_instance`
+	local wifi_iface=`$UCI_ADD wireless wifi-iface`
+	$UCI_SET wireless.$wifi_iface.device=wl0
+	$UCI_SET wireless.$wifi_iface.encryption=none
+	$UCI_SET wireless.$wifi_iface.mode=ap
+	$UCI_SET wireless.$wifi_iface.ssid=DefaultSSID
+	$UCI_SET wireless.$wifi_iface.instance=$((++instance))
+	$UCI_COMMIT
+	echo $instance
+}
+
+lan_device_delete_wlan_iface() {
+	local iface="$1"
+	$UCI_DELETE wireless.$iface
+	$UCI_COMMIT
+	return 0
+}

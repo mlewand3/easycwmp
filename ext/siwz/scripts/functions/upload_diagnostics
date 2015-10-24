@@ -1,0 +1,34 @@
+#!/bin/sh
+# Copyright (C) 2015 PIVA Software <www.pivasoftware.com>
+# 	Author: MOHAMED Kallel <mohamed.kallel@pivasoftware.com>
+
+#common_execute_method_param "$parameter" "$permission" "$get_cmd" "$set_cmd" "xsd:$type" "$forcedinform"
+#  $forcedinform should be set to 1 if the parameter is included in the inform message otherwise empty
+#  Default of $type = string
+
+#############################
+#   Entry point functions   #
+#############################
+
+prefix_list="$prefix_list $DMROOT.UploadDiagnostics."
+entry_execute_method_list="$entry_execute_method_list entry_execute_method_root_UploadDiagnostics"
+
+entry_execute_method_root_UploadDiagnostics() {
+	case "$1" in ""|"$DMROOT."|"$DMROOT.UploadDiagnostics."*)
+		common_execute_method_obj "$DMROOT.UploadDiagnostics." "0"
+		common_execute_method_param "$DMROOT.UploadDiagnostics.DiagnosticsState" "0" "echo TODO" "" "xsd:string"
+		common_execute_method_param "$DMROOT.UploadDiagnostics.Interface" "0" "echo TODO" "" "xsd:string"
+		common_execute_method_param "$DMROOT.UploadDiagnostics.UploadURL" "0" "echo TODO" "" "xsd:string"
+		common_execute_method_param "$DMROOT.UploadDiagnostics.DSCP" "0" "echo TODO" "" "xsd:unsignedInt"
+		common_execute_method_param "$DMROOT.UploadDiagnostics.EthernetPriority" "0" "echo TODO" "" "xsd:unsignedInt"
+		common_execute_method_param "$DMROOT.UploadDiagnostics.TestFileLength" "0" "echo TODO" "" "xsd:unsignedInt"
+		common_execute_method_param "$DMROOT.UploadDiagnostics.ROMTime" "0" "echo TODO" "" "xsd:dateTime"
+		common_execute_method_param "$DMROOT.UploadDiagnostics.BOMTime" "0" "echo TODO" "" "xsd:dateTime"
+		common_execute_method_param "$DMROOT.UploadDiagnostics.EOMTime" "0" "echo TODO" "" "xsd:dateTime"
+		common_execute_method_param "$DMROOT.UploadDiagnostics.TotalBytesSent" "0" "echo TODO" "" "xsd:unsignedInt"
+		common_execute_method_param "$DMROOT.UploadDiagnostics.TCPOpenRequestTime" "0" "echo TODO" "" "xsd:dateTime"
+		common_execute_method_param "$DMROOT.UploadDiagnostics.TCPOpenResponseTime" "0" "echo TODO" "" "xsd:dateTime"
+		;;
+	esac
+	return $E_INVALID_PARAMETER_NAME;
+}
