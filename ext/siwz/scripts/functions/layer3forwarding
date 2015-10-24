@@ -14,23 +14,56 @@ prefix_list="$prefix_list $DMROOT.Layer3Forwarding."
 entry_execute_method_list="$entry_execute_method_list entry_execute_method_root_Layer3Forwarding"
 
 entry_execute_method_root_Layer3Forwarding() {
-	case "$1" in ""|"$DMROOT."|"$DMROOT.Layer3Forwarding.."*)
+	case "$1" in ""|"$DMROOT."|"$DMROOT.Layer3Forwarding."*)
 		common_execute_method_obj "$DMROOT.Layer3Forwarding." "0"
-		common_execute_method_param "$DMROOT.Layer3Forwarding.DefaultConnectionService" "0" "echo TODO"
-		common_execute_method_param "$DMROOT.Layer3Forwarding.ForwardNumberOfEntries" "0" "echo TODO"
-		common_execute_method_obj "$DMROOT.Layer3Forwarding.Forwarding." "0" "echo TODO"
-		common_execute_method_obj "$DMROOT.Layer3Forwarding.Forwarding.1." "0" "echo TODO"
-		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.1.Enable" "0" "echo TODO" "" "xsd:boolean"
-		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.1.Status" "0" "echo TODO"
-		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.1.DestIPAddress" "0" "echo TODO"
-		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.1.DestSubnetMask" "0" "echo TODO"
-		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.1.SourceIPAddress" "0" "echo TODO"
-		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.1.SourceSubnetMask" "0" "echo TODO"
-		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.1.GatewayIPAddress" "0" "echo TODO"
-		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.1.Interface" "0" "echo TODO"
-		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.1.ForwardingMetric" "0" "echo TODO" "" "xsd:int"
-		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.1.MTU" "0" "echo TODO" "" "xsd:unsignedInt"
+		local default_service iter arr=`get_route_arr`
+		# Convert multiline string to array
+		IFS=$'\n' read -d '' -r -a arr <<< "$arr"
+		default_service=TODO
+		common_execute_method_param "$DMROOT.Layer3Forwarding.DefaultConnectionService" "0" "echo ${default_service}"
+		common_execute_method_param "$DMROOT.Layer3Forwarding.ForwardNumberOfEntries" "0" "echo ${#arr[@]}"
+		common_execute_method_obj "$DMROOT.Layer3Forwarding.Forwarding." "0"
+		for iter in "${!arr[@]}"; do 
+			sub_entry_layer3forwarding "$1" "${iter}" "${arr[${iter}]}"
+		done
 		;;
 	esac
 	return $E_INVALID_PARAMETER_NAME;
+}
+
+sub_entry_layer3forwarding() {
+	local iter="$2"
+	# Replace \t with spaces and convert to array
+	local arr=(${3//:\t/ })
+	#Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+	case_param "$1" belongto "$DMROOT.Layer3Forwarding.Forwarding.$iter." && {
+		common_execute_method_obj "$DMROOT.Layer3Forwarding.Forwarding.$iter." "0"
+		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.$iter.Enable" "0" "echo 1" "" "xsd:boolean"
+		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.$iter.Status" "0" "echo TODO"
+		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.$iter.DestIPAddress" "0" "echo ${arr[1]}"
+		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.$iter.DestSubnetMask" "0" "echo ${arr[2]}"
+		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.$iter.SourceIPAddress" "0" "echo TODO"
+		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.$iter.SourceSubnetMask" "0" "echo ${arr[2]}"
+		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.$iter.GatewayIPAddress" "0" "echo ${arr[1]}"
+		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.$iter.Interface" "0" "echo ${arr[7]}"
+		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.$iter.ForwardingMetric" "0" "echo ${arr[4]}" "" "xsd:int"
+		common_execute_method_param "$DMROOT.Layer3Forwarding.Forwarding.$iter.MTU" "0" "echo TODO" "" "xsd:unsignedInt"
+		
+	}
+}
+
+#######################################
+#   Data model parameters functions   #
+#######################################
+
+get_route_arr() {
+# Example output of route:
+#Kernel IP routing table
+#Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+#default         10.0.2.2        0.0.0.0         UG    100    0        0 eth0
+#10.0.2.0        *               255.255.255.0   U     100    0        0 eth0
+#link-local      *               255.255.0.0     U     1000   0        0 eth0
+#192.168.56.0    *               255.255.255.0   U     100    0        0 eth1
+	echo res="`route -n | tail -n +3`"
+	#echo "$res"
 }

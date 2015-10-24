@@ -38,5 +38,3 @@ get_timezone_name() {
 	tz=${tz#*'Time zone: '}
 	echo $tz
 }
-
-#       Time zone: Europe/Warsaw (CEST, +0200)
